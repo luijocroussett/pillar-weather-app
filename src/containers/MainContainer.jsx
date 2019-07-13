@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-// import { geolocated } from 'react-geolocated';
 import Label from '../components/Label';
 import Input from '../components/Input';
 import Button from '../components/Button';
@@ -22,6 +21,7 @@ function MainContainer({ coords }) {
   const [city, setCity] = useState('Current Location');
   // State value that keeps tracks of the type of Temp (C or F)
   const [tempType, setTempType] = useState('C');
+  // state for button validation
   const [buttonStatus, setButtonStatus] = useState(false);
   // State used to display error messages
   const [validationError, setValidationError] = useState(false);
@@ -44,11 +44,9 @@ function MainContainer({ coords }) {
       url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=af7a365a9e19a4229a34c931402b7bc5`;
     else if (option === 'zip')
       url = `https://api.openweathermap.org/data/2.5/weather?zip=${location}&appid=af7a365a9e19a4229a34c931402b7bc5`;
-    console.log(url);
     fetch(url)
       .then(response => response.json())
       .then(data => {
-        console.log(data);
         if (data.hasOwnProperty('message')) {
           setValidationError([true, data.message]);
           setChartData([
@@ -57,7 +55,6 @@ function MainContainer({ coords }) {
             { name: 'pre', pre: 0 },
           ]);
         } else {
-          console.log('I am here');
           setChartData([
             {
               name: 'temp',
@@ -109,8 +106,6 @@ function MainContainer({ coords }) {
   }, [tempType]);
 
   const handleInputChange = event => {
-    console.log('handleInputChange:', event.target.value);
-    console.log('button status: ', buttonStatus);
     setInputValue(event.target.value);
     event.target.value !== '' && selectValue !== 'city or zip'
       ? setButtonStatus(true)
@@ -118,8 +113,6 @@ function MainContainer({ coords }) {
   };
 
   const handleSelectChange = event => {
-    console.log('handleSelectChange:', event.target.value);
-    console.log('button status: ', buttonStatus);
     setSelectValue(event.target.value);
     event.target.value !== 'city or zip' && inputValue !== ''
       ? setButtonStatus(true)
@@ -127,7 +120,6 @@ function MainContainer({ coords }) {
   };
 
   const handleClick = () => {
-    console.log('click', inputValue, selectValue);
     if (selectValue === '' || inputValue === '')
       setValidationError([true, 'missing fields']);
     else {
