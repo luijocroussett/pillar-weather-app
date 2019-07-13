@@ -1,5 +1,7 @@
 import React from 'react';
 
+// Input component that takes in custome properties for styling and formatting
+
 function Input({ text, type, size, handleChange }) {
   const inputStyle = {
     borderRadius: '5px',

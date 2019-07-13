@@ -1,5 +1,7 @@
 import React from 'react';
 
+// Select components that takes in custome properties for styling and formatting
+
 function Select({ text, size, width, options, handleChange, defaultText }) {
   const selectStyle = {
     borderRadius: '5px',

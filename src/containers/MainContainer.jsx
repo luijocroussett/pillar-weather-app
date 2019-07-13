@@ -8,17 +8,24 @@ import Chart from '../components/Chart';
 
 function MainContainer({ coords }) {
   const [options] = useState(['City or Zip', 'city', 'zip']);
+  // recentSearch keeps tracks of last 3 searches
   const [recentSearch, setRecentSearch] = useState([
     'Nothing yet',
     'Nothing yet',
     'Nothing yet',
   ]);
+  // State to control input
   const [inputValue, setInputValue] = useState('');
+  // State to control input of select component
   const [selectValue, setSelectValue] = useState('');
+  // State that keeps track of the current search
   const [city, setCity] = useState('Current Location');
+  // State value that keeps tracks of the type of Temp (C or F)
   const [tempType, setTempType] = useState('C');
   const [buttonStatus, setButtonStatus] = useState(false);
+  // State used to display error messages
   const [validationError, setValidationError] = useState(false);
+  // Chart data
   const [chartData, setChartData] = useState([
     { name: 'temp' },
     { name: 'hum' },

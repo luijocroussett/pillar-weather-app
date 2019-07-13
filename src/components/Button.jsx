@@ -1,5 +1,7 @@
 import React from 'react';
 
+// Button component that takes in custome properties for styling and formatting
+
 function Button({ text, enabled, handleClick }) {
   const buttonStyle = {
     backgroundColor: 'black',
