@@ -3,9 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.4",
+    "express": "^4.17.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-scripts": "3.0.1"
+    "react-geolocated": "^2.5.0",
+    "react-scripts": "3.0.1",
+    "recharts": "^1.6.2"
   },
   "scripts": {
     "start": "react-scripts start",
