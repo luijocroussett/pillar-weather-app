@@ -54,9 +54,10 @@ function MainContainer({ coords }) {
         url = `https://api.openweathermap.org/data/2.5/weather?${location}&appid=af7a365a9e19a4229a34c931402b7bc5`;
       else return;
       fetch(url)
-        .then(response => response.json())
+        .then(response => {
+          return response.json();
+        })
         .then(data => {
-          console.log(data);
           if (data.cod === 200) {
             setChartData([
               {
@@ -80,16 +81,16 @@ function MainContainer({ coords }) {
             ]);
           }
         })
-        .catch(error => console.log('error'));
+        .catch(error => console.log(error));
     },
     [tempType],
   );
 
   useEffect(() => {
     // get location
+    setValidationError([true, 'locating user...']);
     navigator.geolocation.getCurrentPosition(
       position => {
-        setValidationError([true, 'locating city...']);
         let lat = position.coords.latitude;
         let lon = position.coords.longitude;
         getWeather(`lat=${lat}&lon=${lon}`, 'coords');
@@ -102,24 +103,28 @@ function MainContainer({ coords }) {
 
   const handleInputChange = event => {
     setInputValue(event.target.value);
-    event.target.value !== '' && selectValue !== 'city or zip'
+    event.target.value !== '' && selectValue !== ''
       ? setButtonStatus(true)
       : setButtonStatus(false);
   };
 
   const handleSelectChange = event => {
-    let newSelectValue = '';
-    if (event.target.value !== 'city or zip' && inputValue !== '')
-      newSelectValue = event.target.value;
-    setSelectValue(newSelectValue);
+    setSelectValue(event.target.value);
+    inputValue !== 'Enter city or Zip' && inputValue !== ''
+      ? setButtonStatus(true)
+      : setButtonStatus(false);
   };
 
   const handleClick = value => {
-    value = value ? value : inputValue;
     let select = value ? 'city' : selectValue;
+    value = value ? value : inputValue;
     if (select === '' || value === '')
       setValidationError([true, 'missing fields']);
-    else {
+    else if (select === 'zip' && /[a-z]/gi.test(value.toLowerCase()))
+      setValidationError([true, 'zip code should not have letters']);
+    else if (select === 'city' && /[0-9]/gi.test(value))
+      setValidationError([true, 'When looking by city do not use numbers...']);
+    else if (value !== 'Nothing yet') {
       setValidationError([false, '']);
       getWeather(value, select);
       setRecentSearch([recentSearch[1], recentSearch[2], city]);
