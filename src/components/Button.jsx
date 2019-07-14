@@ -14,7 +14,7 @@ function Button({ text, enabled, handleClick }) {
   };
   return (
     <p className="Button">
-      <button style={buttonStyle} onClick={handleClick}>
+      <button style={buttonStyle} onClick={() => handleClick('')}>
         {text}
       </button>
     </p>

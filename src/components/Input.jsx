@@ -25,6 +25,13 @@ function Input({ text, type, size, handleChange }) {
               ? ''
               : event.target.value)
         }
+        onBlur={event => {
+          console.log('focus out');
+          event.target.value =
+            event.target.value === ''
+              ? 'Enter city or Zip'
+              : event.target.value;
+        }}
       />
     </div>
   );
